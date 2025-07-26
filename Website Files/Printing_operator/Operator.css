@@ -1,0 +1,472 @@
+@font-face {
+    font-family: 'Source Serif Pro';
+    src: url('/SourceSerif4-Medium.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Bukhari Script';
+    src: url('/BukhariScript-lemD.ttf') format('truetype');
+}
+
+body {
+  margin: 0;
+  font-family: 'Source Serif Pro';
+  background-color: #fff;
+  color: #1e1e1e;
+  width: 100vw;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.header {
+  background-color: #203162;
+  color: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 30px;
+  margin-bottom: 10px;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  font-family: 'Bukhari Script';
+}
+
+.logo span {
+  color: #0ea57c;
+  font-family: 'Bukhari Script', cursive;
+}
+
+.welcome {
+  font-size: 20px;
+  font-weight: bold;
+  font-style: italic;
+}
+
+/* Header buttons styling */
+.header-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-end;
+}
+
+.logout-button {
+  padding: 8px 15px;
+  background-color: #ffffff;
+  border: 2px solid #203162;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  font-family: 'Bukhari Script', cursive;
+}
+
+.availability-button {
+  padding: 8px 15px;
+  background-color: #4CAF50;
+  color: white;
+  border: 2px solid #4CAF50;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.availability-button:hover {
+  background-color: #45a049;
+}
+
+.availability-button.unavailable {
+  background-color: #f44336;
+  border-color: #f44336;
+}
+
+.availability-button.unavailable:hover {
+  background-color: #d32f2f;
+}
+
+/* Printer status button styling */
+.printer-status-container {
+  display: flex;
+  justify-content: flex-end;
+  padding: 15px 30px;
+  margin-bottom: 10px;
+}
+
+.printer-status-btn {
+  padding: 12px 24px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Source Serif Pro', serif;
+  box-shadow: 0 3px 6px rgba(40, 167, 69, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.printer-status-btn:hover {
+  background-color: #218838;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 10px rgba(40, 167, 69, 0.4);
+}
+
+.printer-status-btn.unavailable {
+  background-color: #dc3545;
+  box-shadow: 0 3px 6px rgba(220, 53, 69, 0.3);
+}
+
+.printer-status-btn.unavailable:hover {
+  background-color: #c82333;
+  box-shadow: 0 5px 10px rgba(220, 53, 69, 0.4);
+}
+
+.printer-status-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.container1 {
+  width: 100%;
+  padding: 10px;
+  margin-top: 0;
+  text-align: center;
+}
+
+h2 {
+  font-size: 24px;
+  color: #4A90E2;
+  margin-bottom: 20px;
+  font-family: 'Source Serif Pro', serif;
+}
+
+.stats {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 0 1 auto;
+  background-color: #fff;
+  border-radius: 30px;
+  padding: 20px;
+  width: 200px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: 'Source Serif Pro', serif;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stat-item:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.icon img {
+  display: block;
+  margin: 0 auto 15px;
+  width: 50px;
+  height: 50px;
+}
+
+.details {
+  text-align: center;
+}
+
+.details p {
+  margin: 5px 0;
+  font-size: 18px;
+  color: #333;
+  font-family: 'Source Serif Pro', serif;
+}
+
+.number {
+  font-size: 20px;
+  font-weight: bold;
+  font-family: 'Source Serif Pro', serif;
+}
+
+.stat-item:nth-child(1) {
+  background-color: #34c0a7;
+}
+
+.stat-item:nth-child(2) {
+  background-color: #5d8dc3;
+}
+
+.stat-item:nth-child(3) {
+  background-color: #f39c12;
+}
+
+.container2 {
+  background-color: #f1f2f2 ;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 90%;
+  margin: 20px auto;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: separate; /* Changed from collapse to separate */
+  border-spacing: 8px; /* Add space between cells */
+  margin-top: 20px;
+  background-color: #f9f9f9; /* Lighter background for the table */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 10px;
+}
+
+th, td {
+  padding: 12px;
+  text-align: center;
+  border: none; /* Remove borders */
+  font-family: 'Source Serif Pro', serif;
+}
+
+th {
+  background-color: #f8f8f8;
+  color: #333;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 8px; /* Add bottom margin to headers */
+}
+
+td {
+  font-size: 16px;
+  color: #555;
+  vertical-align: middle; /* Align content vertically */
+}
+
+td.reference-no {
+  background-color: #d9eaff;
+  color: #4A90E2;
+  font-weight: bold;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-family: 'Source Serif Pro', serif;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+td.document-name {
+  background-color: #e8f4f8;
+  color: #2c5282;
+  font-weight: bold;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-family: 'Source Serif Pro', serif;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+td.document-name {
+  background-color: #e8f4f8;
+  color: #2c5282;
+  font-weight: bold;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-family: 'Source Serif Pro', serif;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+td.color {
+  background-color: #5d8dc3;
+  color: white;
+  font-style: italic;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-family: 'Source Serif Pro', serif;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+
+td.copies {
+  background-color: #203162;
+  color: white;
+  font-weight: bold;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-family: 'Source Serif Pro', serif;
+  width: 60px;
+  min-width: 60px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Apply similar styling to package table cells */
+td.reference-id {
+  background-color: #ffecda;
+  color: #ff7f0e;
+  font-weight: bold;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-family: 'Source Serif Pro', serif;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+td.pages {
+  background-color: #e8f5e9;
+  color: #388e3c;
+  font-weight: bold;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-family: 'Source Serif Pro', serif;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+td.amount {
+  background-color: #e3f2fd;
+  color: #1976d2;
+  font-weight: bold;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-family: 'Source Serif Pro', serif;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+button {
+  padding: 6px 12px;
+  font-size: 14px;
+  border: none;
+  cursor: pointer;
+  border-radius: 20px;
+}
+
+.in-progress {
+  display: none;
+  background-color: #f39c12;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 5px;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.print {
+  background-color: #28a745;
+  color: white;
+}
+.accept {
+  background-color: #28a745;
+  color: white;
+}
+
+.reject {
+  background-color: #dc3545;
+  color: white;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+.container2 h2 {
+  text-align: center;
+  font-size: 30px;
+  color: #4A90E2;
+  margin-bottom: 10px;
+  font-family: 'Source Serif Pro', serif;
+}
+
+/* Printing time control styling */
+.printing-time-control {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  background-color: #f8f9fa;
+  padding: 15px 25px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e9ecef;
+  font-family: 'Source Serif Pro', serif;
+}
+
+.printing-time-control span {
+  font-size: 16px;
+  font-weight: 600;
+  color: #495057;
+  font-family: 'Source Serif Pro', serif;
+}
+
+.printing-time-control input[type="time"] {
+  padding: 8px 12px;
+  border: 2px solid #4A90E2;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #203162;
+  background-color: white;
+  font-family: 'Source Serif Pro', serif;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.printing-time-control input[type="time"]:focus {
+  border-color: #2c5aa0;
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+}
+
+.update-time-btn {
+  background-color: #4A90E2;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Source Serif Pro', serif;
+  box-shadow: 0 2px 4px rgba(74, 144, 226, 0.2);
+}
+
+.update-time-btn:hover {
+  background-color: #2c5aa0;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(74, 144, 226, 0.3);
+}
+
+.update-time-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(74, 144, 226, 0.2);
+}
+
+/* Container 3 styling */
+.container3 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 80%;
+  margin: 20px auto;
+  padding: 15px;
+}
+
+.container3 h2 {
+  text-align: center;
+  font-size: 30px;
+  color: #4A90E2;
+  margin-bottom: 10px;
+  font-family: 'Source Serif Pro', serif;
+}
+
+
+/*  This is for fade out from printers table (Package request) */
+.fade-out {
+  opacity: 0;
+  transition: opacity 0.5s ease-out;
+}

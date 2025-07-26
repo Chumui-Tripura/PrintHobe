@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PrintHobe</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="payment.css">
+  <link rel="stylesheet" href="../Homepage/homepage.css">
+</head>
+
+<body>
+  <header class="header">
+    <div class="logo">Print<span>Hobe</span></div>
+    <div class="welcome" id="welcomeMessage">Hello, CSE - 21</div>
+    <button class="login-button" id="authButton">Sign Up / Login</button>
+  </header>
+
+  <!-- main content -->
+  <main>
+    <h1 class="headline">
+      Drop
+      <span class="pay">Pay</span>
+      &amp;
+      <span class="relax">Relax</span>
+    </h1>
+
+    <!-- File Drop Area -->
+    <div class="drop-area" id="dropArea">
+      <img src="Drop_icon.png" alt="Drop file icon" />
+      <p>Drop Your File here (.pdf)</p>
+    </div>
+
+    <!-- Hidden File Input -->
+    <input type="file" id="fileInput" accept="application/pdf" style="display: none" />
+    <!-- Preferences Form -->
+    <form class="preferences-form">
+      <div class="pref-header">
+        <img src="Calculator.png" alt="Calculator Icon" />
+        <strong>Choose Your Preferences</strong>
+      </div>
+
+      <div class="pref-row">
+        <label for="pages">Pages:</label>
+        <input id="pages" name="pages" type="number" min="1" value="1" />
+      </div>
+
+      <div class="pref-row">
+        <label for="copies">Copies:</label>
+        <input id="copies" name="copies" type="number" min="1" value="1" />
+      </div>
+
+      <div class="pref-row">
+        <label for="sides">Sides:</label>
+        <select id="sides" name="sides">
+          <option value="SINGLE_SIDED" selected>Single Sided</option>
+          <option value="DOUBLE_SIDED">Double Sided</option>
+        </select>
+      </div>
+
+      <div class="pref-row">
+        <label for="color">Color:</label>
+        <select id="color" name="color">
+          <option value="BW" >Black & White</option>
+          <option value="COLOR" selected>Color</option>
+        </select>
+      </div>
+
+      <div class="pref-row">
+        <label for="punching">Punching:</label>
+        <select id="punching" name="punching">
+          <option value="YES">Yes</option>
+          <option value="NO" selected>No</option>
+        </select>
+      </div>
+
+      <div class="pref-row">
+        <label for="amount">Amount:</label>
+        <input id="amount" name="amount" type="number" min="0" value="0" readonly />
+      </div>
+
+      <div class="pref-row">
+        <label for="estimatedTime">Estimated Time:</label>
+        <input id="estimatedTime" name="estimatedTime" type="text" readonly />
+      </div>
+
+      <button type="button" class="btn use-package">Use Your Package</button>
+      <button type="submit" class="btn pay-now">Pay Now</button>
+      <!-- Bkash Popup -->
+      <div id="bkash-popup-overlay">
+        <div id="bkash-popup">
+          <div class="bkash-outer">
+            <div class="logo-circle">
+              <img src="bkash-logo.jpg" alt="Bkash Logo" />
+            </div>
+            <div class="bkash-inner">
+              <h3>Bkash Number<br><strong>01598127415</strong></h3>
+              <p>Enter Reference No.</p>
+              <input type="text" placeholder="JYd234ttadXXYr" />
+              <br />
+              <button class="submit-btn">SUBMIT</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </main>
+
+  <script src="payment.js"></script>
+  <script src="../Homepage/header.js"></script>
+  <script src="upload.js"></script>
+</body>
+
+</html>

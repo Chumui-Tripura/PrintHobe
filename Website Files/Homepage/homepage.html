@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PrintHobe - Home</title>
+  <link rel="stylesheet" href="homepage.css" />
+  <link rel="stylesheet" href="loginModal.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    integrity="sha512-BxU1+J4XxUwVJ8rC9hXDYvLgY6JQ38xKwnTVtE+Af6V63tIDx9vD9TkDw0+1vE+WeNDq6TjZhz+1z9w8O9+DTg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!--for icons-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+
+<body>
+  <header class="header">
+    <div class="logo">Print<span>Hobe</span></div>
+    <div class="welcome" id="welcomeMessage">Hello, CSE - 21</div>
+    <button class="login-button" id="authButton">Sign Up / Login</button>
+  </header>
+
+
+  <main class="main-content">
+    <div class="welcome_section">
+      <h1>Welcome To <span class="brand"><br>PrintHobe</span></h1>
+      <h2 class="subtitle">A ONE STOP SOLUTION FOR PRINTING YOUR DOCUMENTS</h2>
+    </div>
+
+    <!--operator sign up-->
+    <button class="operator-signup-btn">JOIN AS AN OPERATOR</button>
+    <!-- Operator Signup Modal -->
+    <div id="operatorModal" class="modal">
+      <div class="operator-modal-content">
+        <span class="close-operator">&times;</span>
+
+        <form class="login-form" id="operatorSignupForm">
+          <!-- Step 1: Operator Info -->
+          <div id="step1">
+            <h2 style="color: #203162;">Sign Up</h2>
+            <p style="margin-top: -10px; margin-bottom: 20px; color:  #4a4a4a; font-size: 15px; font-weight: bold;">
+              Start printing and earn money with every page.
+            </p>
+
+            <div class="input-group">
+              <i class="icon fa fa-user"></i>
+              <input type="text" name="firstName" placeholder="First Name" required />
+            </div>
+
+            <div class="input-group">
+              <i class="icon fa fa-user"></i>
+              <input type="text" name="lastName" placeholder="Last Name" required />
+            </div>
+
+            <div class="input-group">
+              <i class="icon fa fa-envelope"></i>
+              <input type="email" id="email" placeholder="Enter email" required />
+            </div>
+
+            <div class="input-group">
+              <i class="icon fa fa-key"></i>
+              <input type="password" placeholder="Password" required />
+            </div>
+
+            <div class="input-group">
+              <i class="icon fa fa-lock"></i>
+              <input type="password" placeholder="Confirm Password" required />
+            </div>
+
+
+            <div class="form-navigation-next">
+              <button type="button" id="nextBtn" class="arrow-btn right">Next &#8594;</button>
+              <!-- Right Arrow with "Next" -->
+            </div>
+          </div>
+
+          <!-- Step 2: Printer Info -->
+          <div id="step2" style="display: none;">
+            <h2 style="color: #203162;">Printer Details</h2>
+
+            <!-- Printer Name -->
+            <div class="input-group">
+              <i class="icon fa fa-print"></i>
+              <input type="text" name="printer_name" placeholder="Printer Name" required />
+            </div>
+
+            <!-- Location -->
+            <div class="input-group">
+              <i class="icon fa fa-map-marker"></i>
+              <input type="text" name="location" placeholder="Location (e.g., Lab 1)" required />
+            </div>
+
+            <!-- Time Per Page (B&W) -->
+            <div class="input-group">
+              <i class="icon fa fa-hourglass-half"></i>
+              <input type="number" name="time_bw" placeholder="Time Per Page (B&W) in sec" min="1" step="0.1"
+                required />
+            </div>
+
+            <!-- Time Per Page (Color) -->
+            <div class="input-group">
+              <i class="icon fa fa-hourglass-half"></i>
+              <input type="number" name="time_color" placeholder="Time Per Page (Color) in sec" min="1" step="0.1"
+                required />
+            </div>
+
+            <!-- B&W per page -->
+            <div class="input-group">
+              <i class="fa-solid fa-file-lines" style="color: #444;margin-right: 5px;"></i> <!-- B&W icon -->
+              <span>Tk.</span>
+              <input type="number" name="cost_bw" placeholder="B&W per page (e.g., 2.00)" min="1" step="0.1" required />
+            </div>
+
+            <!-- Color per page -->
+            <div class="input-group">
+              <i class="fa-solid fa-file-lines" style="color: #ff9d42;margin-right: 5px;"></i> <!-- Color icon -->
+              <span>Tk.</span>
+              <input type="number" name="cost_color" placeholder="Color per page (e.g., 5.00)" min="1" step="0.1"
+                required />
+            </div>
+
+
+            <!-- Bkash Number -->
+            <div class="input-group">
+              <i class="icon fa fa-mobile"></i>
+              <input type="text" name="bkash_number" placeholder="Bkash Number" required pattern="01[3-9][0-9]{8}" />
+            </div>
+
+
+            <!-- Create Package Button -->
+            <div class="input-group">
+              <button type="button" id="createPackageBtn" class="login-btn">Create Package</button>
+            </div>
+            <!-- Hidden Package Input Section -->
+            <div id="packageSection" style="display: none; margin-top: 10px;">
+              <!-- Package Price -->
+              <div class="input-group">
+                <i class="fa fa-money"></i>
+                <span>Tk.</span>
+                <input type="number" name="package_price" placeholder="Package Price (e.g., 100)" min="0" step="1" />
+              </div>
+
+              <!-- Package Pages -->
+              <div class="input-group">
+                <i class="fa fa-file-text"></i>
+                <input type="number" name="package_pages" placeholder="Total Pages in Package" min="1" step="1" />
+              </div>
+            </div>
+
+            <button type="submit" class="login-btn">Submit</button>
+            <div class="form-navigation">
+              <button type="button" id="backBtn" class="arrow-btn left">&#8592; Back</button>
+              <!-- Left Arrow with "Back" -->
+            </div>
+
+          </div>
+        </form>
+      </div>
+    </div>
+    <!--homepg steps-->
+    
+<div class="steps-container">
+  <div class="step">
+    <div class="step-header">
+      Step 1
+    </div>
+    <div class="step-body">
+      <img src="login.png" alt="Sign Up Icon" style="width: 180px; height: 140px; margin-bottom: 10px;margin-top:5px; display: block; margin-left: auto; margin-right: auto;">
+      Sign Up / Login
+      
+    </div>
+  </div>
+
+
+
+      <div class="arrow">&#9654;</div>
+      <div class="step">
+        <div class="step-header">Step 2</div>
+        <div class="step-body">
+           <img src="dropfile.png" alt="Sign Up Icon" style="width: 110px; height: 110px; margin-bottom: 15px;margin-top:5px; display: block; margin-left: 50px; margin-right: auto;">
+          Drop Your File <br />& Customize your Preferences
+         
+        </div>
+      </div>
+      <div class="arrow">&#9654;</div>
+      <div class="step">
+        <div class="step-header">Step 3</div>
+        <img src="payment.png" alt="Sign Up Icon" style="width: 180px; height: 140px; margin-bottom:auto ;margin-top:15px; display: block; margin-left: 40px; margin-right: auto;">
+        <div class="step-body">Complete the Payment</div>
+
+        
+      </div>
+      <div class="arrow">&#9654;</div>
+      <div class="step">
+        <div class="step-header">Step 4</div>
+        <img src="collect.png" alt="Sign Up Icon" style="width: 180px; height: 140px; margin-bottom:0px;margin-top:15px; display: block; margin-left: 40px; margin-right: auto;">
+        <div class="step-body">Collect Your Printings!!</div>
+        
+      </div>
+    </div>
+    <div class="bottom-Box">
+
+    </div>
+  </main>
+
+  />
+
+  <!-- LOGIN SIGNUP POPUP MODAL for users -->
+  <div id="loginModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+
+      <!-- Login Form for users -->
+      <form class="login-form" id="loginForm">
+        <h2 style="color: #203162;">Login Form</h2>
+
+        <div class="input-group">
+          <i class="icon fa fa-envelope"></i>
+          <input type="email" id="emailLogin" placeholder="Enter email" required />
+        </div>
+        <div class="input-group">
+          <i class="icon fa fa-lock"></i>
+          <input type="password" id="passwordLogin" placeholder="Password" required />
+        </div>
+
+        <div class="options">
+          <label><input type="checkbox" /> Remember me</label>
+          <a href="#">Forgot Password?</a>
+        </div>
+
+        <button type="submit" class="login-btn">LOGIN</button>
+        <p style="margin-top: 15px; text-align: center; color: #203162; font-weight: 600;">
+          Don't have an account?
+          <a href="#" onclick="switchToSignUpForm()">Sign up</a>
+        </p>
+      </form>
+
+      <!-- Signup Form for users -->
+      <form class="login-form" id="signupForm" style="display: none;">
+        <h2 style="color: #203162;">Sign Up</h2>
+
+        <div class="input-group">
+          <i class="icon fa fa-user"></i>
+          <input type="text" name="firstName" placeholder="First Name" required />
+        </div>
+
+        <div class="input-group">
+          <i class="icon fa fa-user"></i>
+          <input type="text" name="lastName" placeholder="Last Name" required />
+        </div>
+
+        <div class="input-group">
+          <i class="icon fa fa-envelope"></i>
+          <input type="email" placeholder="Email" required />
+        </div>
+
+
+
+        <div class="input-group">
+          <i class="icon fa fa-key"></i>
+          <input type="password" placeholder="Password" required />
+        </div>
+
+        <div class="input-group">
+          <i class="icon fa fa-lock"></i>
+          <input type="password" placeholder="Confirm Password" required />
+        </div>
+
+        <button type="submit" class="login-btn">Sign Up</button>
+
+        <p style="margin-top: 15px; text-align: center; color: #203162; font-weight: 600;">
+          Already have an account?
+          <a href="#" onclick="switchToLoginForm()">Login</a>
+        </p>
+      </form>
+    </div>
+  </div>
+  </div>
+  </div>
+
+  <!-- JavaScript for modal and form switching -->
+  <!-- <script src="homepage.js"></script> -->
+  <script src="loginModal.js"></script>
+  <script src="signUpOperator.js"></script>
+  <script src="../User/user.js"></script>
+  <script src="signUpUser.js"></script>
+</body>
+</html>

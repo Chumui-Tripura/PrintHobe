@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PrintHobe</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="user.css">
+  <link rel="stylesheet" href="../Homepage/homepage.css">
+</head>
+
+<body>
+  <header class="header">
+    <div class="logo">Print<span>Hobe</span></div>
+    <div class="welcome" id="welcomeMessage">Hello, CSE - 21</div>
+    <button class="login-button" id="authButton">Sign Up / Login</button>
+  </header>
+
+  <div class="container">
+
+    <!-- orange Banner -->
+
+    <div class="banner">
+      <div class="banner-text">
+        <p>Tired of filling the Reference No.<br />Every Time you print??<br />Buy the package of 50 pages for only
+          200tk</p>
+      </div>
+      <button class="buy-now">Buy Now</button>
+      <!-- Bkash Popup -->
+
+      <div id="bkash-popup-overlay">
+        <div id="bkash-popup">
+          <div class="bkash-outer">
+            <div class="logo-circle">
+              <img src="bkash-logo.jpg" alt="Bkash Logo" />
+            </div>
+            <div class="bkash-inner">
+              <h3>Bkash Number<br><strong>015 - XXX - XXX</strong></h3>
+              <p>Enter Reference No.</p>
+              <br />
+              <input type="text" placeholder="JYd234ttadXXYr" />
+              <br />
+              <button class="submit-btn">SUBMIT</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+      <!-- Left section -->
+      <section class="left-section">
+        <img src="printer.png" alt="Printer Icon" class="icon" />
+        <h3 id="printerName">OS Lab Printer</h3>
+        <p class="cost-text" id="costText">Print Cost: 4tk (Color), 3tk <br /> (Black & white)</p>
+        <button class="btn available-btn" id="availabilityBtn">Available Now</button>
+        <a href="payment.html" class="btn visit-btn">Visit</a>
+      </section>
+
+
+      <!-- Right section -->
+      <section class="right-section">
+        <div class="top-boxes">
+          <div class="box small-box ongoing-printings">
+            <h2>Ongoing Printings</h2>
+            <img src="ongoing.png" alt="Printer Icon" class="icon_ongoing" />
+          </div>
+
+          <div class="box small-box payment-history">
+            <h2>Payment History</h2>
+            <img src="calculator.png" alt="Calculator Icon" class="icon_calculator" />
+          </div>
+        </div>
+
+        <!-- ontgoing printings Modal popup -->
+        <div class="modal" id="ongoingPrintingsModal">
+          <div class="modal-content">
+            <span class="close" id="closeOngoingPrintings">&times;</span>
+            <h2>Ongoing Printings</h2>
+            <table class="ongoing-table">
+              <thead>
+                <tr>
+                  <th>Date&Time</th>
+                  <th>File Name</th>
+                  <th>Pages</th>
+                  <th>Type</th>
+                  <th>Cost</th>
+                  <th>Status</th>
+                  <th>Estimated End Time</th>
+                </tr>
+              </thead>
+              <tbody id="ongoingTableBody">
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Payment History Modal popup -->
+        <div class="modal" id="paymentHistoryModal">
+          <div class="modal-content">
+            <span class="close" id="closePaymentHistory">&times;</span>
+            <h2>Payment History</h2>
+            <table class="payment-table">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Amount</th>
+                  <th>Reference</th>
+                  <th>Payment Time</th>
+                  <th>Payment For</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>10/05/2025</td>
+                  <td>200 Tk</td>
+                  <td>JYd234ttadXXYr</td>
+                  <td>10:30 AM</td>
+                  <td>50 Pages</td>
+                  <td><span class="status finished">Completed</span></td>
+                </tr>
+                <tr>
+                  <td>05/05/2025</td>
+                  <td>200 Tk</td>
+                  <td>KLm567ttadZZWs</td>
+                  <td>02:15 PM</td>
+                  <td>50 Pages</td>
+                  <td><span class="status finished">Completed</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="package-history">
+          <div id="package" class="package"></div>
+          <div class="history">
+            <img src="history.png" alt="Printer Icon" class="icon_history" />
+            <h3>Printings History</h3>
+          </div>
+          <!-- History Modal popup-->
+          <div class="modal" id="historyModal">
+            <div class="modal-content">
+              <span class="close" id="closeHistory">&times;</span>
+              <h2>History</h2>
+              <table class="history-table">
+                <thead>
+                  <tr>
+                    <th>Date &<br>
+                      Time</th>
+                    <th>File Name</th>
+                    <th>Pages</th>
+                    <th>Type</th>
+                    <th>Cost</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>11/05/2025 02:00:00</td>
+                    <td>Lab_Report_01</td>
+                    <td>05</td>
+                    <td>Color</td>
+                    <td>20</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>11/05/2025 11:00:00</td>
+                    <td>Lab_Report_02</td>
+                    <td>04</td>
+                    <td>Color</td>
+                    <td>16</td>
+
+                  </tr>
+                  <tr>
+                    <td>11/05/2025 09:00:00</td>
+                    <td>Lab_Report_03</td>
+                    <td>04</td>
+                    <td>Color</td>
+                    <td>16</td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="user.js"></script>
+  <script src="../Homepage/header.js"></script>
+</body>
+
+</html>

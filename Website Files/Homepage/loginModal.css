@@ -1,0 +1,167 @@
+/* Modal Base Styles */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+/* Modal Content */
+.modal-content {
+  background: #fff;
+  margin: 5% auto;
+  padding: 30px;
+  border-radius: 10px;
+  width: 350px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+.operator-modal-content {
+  background: #fff;
+  margin: 35px auto 0 auto;
+  /* Starts near the top of the page */
+  padding: 20px;
+  border-radius: 10px;
+  width: 80%; 
+  max-width: 400px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+/* operator sign up */
+.form-navigation {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  gap: 10px; /* Space between buttons */
+}
+.form-navigation-next {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+  gap: 10px; /* Space between buttons */
+}
+
+.arrow-btn {
+  padding: 8px 16px;
+  margin-bottom: 15px;
+  font-size: 14px;
+  border: 2px solid #19a28d;
+  border-radius: 20px;
+  background-color: #ffffff;
+  color: #19a28d;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+}
+
+.arrow-btn:hover {
+  transform: translateY(-2px); 
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); 
+  border-color: #157a6e; 
+  
+}
+
+.arrow-btn .arrow {
+  margin-left: 6px; /* Space between the text and the arrow */
+  font-size: 18px; /* Arrow size */
+}
+
+.arrow-btn.left {
+  justify-content: flex-start;
+}
+
+.arrow-btn.right {
+  justify-content: flex-end;
+}
+
+
+
+
+
+
+/* Close Button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 26px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: black;
+}
+
+.close-operator {
+  color: #aaa;
+  float: right;
+  font-size: 26px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close-operator:hover {
+  color: black;
+}
+
+/* Form Styles */
+.login-form .input-group {
+  display: flex;
+  align-items: center;
+  margin: 15px 0;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 8px;
+}
+
+.login-form .input-group input {
+  border: none;
+  outline: none;
+  flex: 1;
+  padding: 8px;
+}
+
+.icon {
+  margin-right: 10px;
+}
+
+.options {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  margin: 10px 0;
+}
+
+.login-btn {
+
+  background: linear-gradient(to right, #203162, #405a8a, #4a6aab);
+
+
+  color: white;
+  border: none;
+  padding: 10px 0;
+  width: 100%;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.login-btn:hover {
+  background: linear-gradient(to right, #4e679b, #4464a3, #6a8ad5);
+
+  box-shadow: 0 6px 12px rgba(58, 89, 157, 0.6);
+}

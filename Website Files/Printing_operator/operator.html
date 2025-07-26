@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PrintHobe</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="../Homepage/homepage.css">
+  <link rel="stylesheet" href="./Operator.css">
+</head>
+
+<body>
+  <header class="header">
+    <div class="logo">Print<span>Hobe</span></div>
+    <div class="welcome" id="welcomeMessage">Hello, CSE - 21</div>
+    <button class="login-button" id="authButton">Sign Up / Login</button>
+  </header>
+  <div class="printer-status-container">
+    <button class="printer-status-btn" id="printerStatusBtn" onclick="togglePrinterStatus()">Available My
+      Printer</button>
+  </div>
+
+
+  <div class="container1">
+    <h2>Still Printing, Right?</h2>
+  </div>
+
+  <!-- ===================== Stat Section ===================== -->
+  <div class="stats">
+    <div class="stat-item">
+      <div class="icon">
+        <img src="./Printer_Image.png" alt="printer" />
+      </div>
+      <div class="details">
+        <p>Total Printings</p>
+        <p class="number" id="totalPrintings">--</p>
+      </div>
+    </div>
+    <div class="stat-item">
+      <div class="icon">
+        <img src="InProgress.png" alt="in-progress" />
+      </div>
+      <div class="details">
+        <p>In Progress</p>
+        <p class="number" id="inProgressCount">--</p>
+      </div>
+    </div>
+    <div class="stat-item">
+      <div class="icon">
+        <img src="Earnings.png" alt="earnings" />
+      </div>
+      <div class="details">
+        <p>Total Earnings</p>
+        <p class="number" id="totalEarnings">--</p>
+      </div>
+    </div>
+  </div>
+  <!-- ===================== Stat Section ===================== -->
+
+
+  <!-- ===================== Printing Scheduling ===================== -->
+  <div class="container2">
+    <h2>Printing Schedule</h2>
+    <div class="printing-time-control">
+      <span>Printing till </span>
+      <input type="time" id="printingTime" />
+      <button class="update-time-btn" onclick="updatePrintingTime()">Update now</button>
+    </div>
+    <table id="printJobsTable">
+      <thead>
+        <tr>
+          <th>Reference No.</th>
+          <th>Document's Name</th>
+          <th>Color</th>
+          <th>No. Of Copies</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="printJobsList">
+        <!-- JS will dynamically populate rows here -->
+      </tbody>
+    </table>
+  </div>
+  <!-- ===================== Printing Scheduling ===================== -->
+
+
+  <!-- Printing Packages Section -->
+  <div class="container3">
+    <h2>Printing Packages</h2>
+    <table id="printPackagesTable">
+      <thead>
+        <tr>
+          <th>Reference ID</th>
+          <th>Pages</th>
+          <th>Amount</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="printPackagesList">
+        <!-- JS will dynamically populate rows here -->
+      </tbody>
+    </table>
+  </div>
+
+
+  <script src="Operator.js"></script>
+  <script src="package-handler.js"></script>
+  <script src="../Homepage/header.js"></script>
+</body>
+</html>

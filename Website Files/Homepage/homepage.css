@@ -1,0 +1,183 @@
+@font-face {
+  font-family: 'Source Serif Pro';
+  src: url('/SourceSerif4-Medium.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Bukhari Script';
+  src: url('/BukhariScript-lemD.ttf') format('truetype');
+}
+
+body {
+  margin: 0;
+  font-family: 'Source Serif Pro';
+  background-color: #fff;
+  color: #1e1e1e;
+  width: 100vw;
+  overflow: hidden; /* This is for no scrolling in homepage */
+}
+
+.header {
+  background-color: #203162;
+  color: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 30px;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  font-family: 'Bukhari Script';
+}
+
+.logo span {
+  color: #0ea57c;
+  /* This is only for logo not for sections */
+  font-family: 'Bukhari Script', cursive;
+}
+
+.welcome {
+  font-size: 20px;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.login-button {
+  padding: 8px 15px;
+  background-color: #ffffff;
+  border: 2px solid #203162;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.main-content {
+  text-align: center;
+  padding: 20px 0px;
+  height: 100vh;
+}
+
+.welcome_section {
+  display: inline;
+  width: 500px;
+  height: 200px;
+  background-color: aqua;
+}
+
+.welcome_section h1 {
+  font-size: 47px;
+  margin: 5px 0;
+  color: #203162;
+}
+
+.welcome_section .brand {
+  color: #19a28d;
+  font-family: 'Bukhari Script';
+  margin-bottom: 5px;
+}
+
+.subtitle {
+  font-size: 27px;
+  color: #203162;
+  margin-bottom: 25px;
+  font-weight: bold;
+}
+
+.operator-signup-btn {
+  background-color: #fff;
+  border: 1px solid #000;
+  /* Thin black border */
+  color: #002147;
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 25px;
+  padding: 10px 20px;
+  text-align: center;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 5px 5px 0 #ff9d42;
+  /* Orange drop shadow */
+  transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
+  line-height: 1.4;
+}
+
+/* Hover effect */
+.operator-signup-btn:hover {
+  color: rgb(0, 0, 0);
+  transform: scale(1.02);
+  box-shadow: 4px 4px 0 #fbc868;
+}
+
+
+.steps-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.step {
+  background-color: #ffffff;
+  color: #000000;
+  width: 230px;
+  height: 299px;
+  margin: 10px;
+  border-radius: 5px;
+  border: 1px solid;
+  border-color: #000000;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.step-header {
+  background-color: #19a28d;
+  color: white;
+  padding: 10px;
+  font-size: 25px;
+  font-weight: bold;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.step-body {
+  padding: 20px 10px;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.arrow {
+  font-size: 30px;
+  margin: 0 10px;
+  color: #203162;
+}
+
+.bottom-Box {
+  position: relative;
+  display: inline-block;
+  width: 100vw;
+  height: 230px;
+  top: -120px;
+  bottom: 0px;
+  background-color: #203162;
+  z-index: -1;
+}
+
+.signup-link {
+  color: #4a6aab;
+  text-decoration: none;
+  font-weight: 700;
+  transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+
+.signup-link:hover {
+  color: #203162;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/*icon styles in login modal*/
+.icon {
+  color: #203162;
+  font-size: 18px;
+}

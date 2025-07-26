@@ -1,0 +1,760 @@
+@font-face {
+    font-family: 'Source Serif Pro';
+    src: url('/SourceSerif4-Medium.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Bukhari Script';
+    src: url('/BukhariScript-lemD.ttf') format('truetype');
+}
+/* Container styling */
+.container {
+  max-width: 1100px;
+  width: 100%; /* so it shrinks on smaller screens */
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-bottom: 15px;
+  margin: auto;
+  background-color: rgb(243, 238, 238); 
+  height: 80vh; 
+  box-shadow: 0 0 10px rgba(0,0,0,0.1); 
+  border-radius: 10px;
+}
+
+.header {
+  background-color: #203162;
+  color: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 30px;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  font-family: 'Bukhari Script';
+}
+
+.logo span {
+  color: #0ea57c;
+  /* This is only for logo not for sections */
+  font-family: 'Bukhari Script', cursive;
+}
+
+.welcome {
+  font-size: 20px;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.login-button {
+  padding: 8px 15px;
+  background-color: #ffffff;
+  border: 2px solid #203162;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+
+
+/* Banner styles */
+.banner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 25px 20px;
+  margin: 30px 15px 10px 0;
+  background-color: #f79f5f;
+  border-radius: 20px;
+}
+
+.banner-text {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 1.3;
+  color: black;
+  user-select: none;
+  text-align: center;
+  max-width: 60%;
+  padding: 0;
+  pointer-events: none; 
+}
+
+.buy-now {
+  margin-left: auto; 
+  font-weight: bold;
+  font-size: 20px;
+  text-decoration: underline;
+  color: black;
+  background: white;
+  padding: 10px 20px;
+  border-radius: 30px;
+  font-family: 'Times New Roman', serif;
+  cursor: pointer;
+  user-select: none;
+  border: 3px solid #f79f5f;
+  box-shadow: 0 0 0 3px white inset;
+  white-space: nowrap;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  position: relative; /* for layering above absolute text */
+  z-index: 1;
+}
+
+
+.buy-now:hover {
+  transform: scale(1.05); /* slightly enlarge */
+  box-shadow: 0 6px 12px rgba(247, 159, 95, 0.5); 
+  background-color:white; 
+  color: black;
+  text-decoration: none;
+}
+
+/* Main container */
+.main-content {
+  display: flex;
+  gap: 25px;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+}
+
+/* Left section */
+.left-section {
+  background-color: white;
+  width: 30%;
+  height: 60%;
+  border-radius: 30px;
+  padding: 30px 15px 35px;
+  box-sizing: border-box;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  box-shadow: 0 0 5px #d0d0d0;
+}
+.left-section h3 {
+  font-weight: bold;
+  font-size: 22px;
+  line-height: 1.1;
+  user-select: none;
+}
+
+.cost-text {
+  font-size: 20px;
+  font-weight: normal;
+  margin-bottom: 5px;
+  user-select: none;
+  margin-top: 0px;
+}
+
+.btn {
+  font-weight: bold;
+  font-size: 18px;
+  padding: 14px 0;
+  border-radius: 30px;
+  border: none;
+  width: 100%;
+  cursor: pointer;
+  font-family: 'Times New Roman', serif;
+  user-select: none;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 3px 0 #238470;
+}
+
+.available-btn {
+  background-color: #2ca994;
+  color: white;
+  margin-bottom: 0px;
+}
+
+.available-btn:hover {
+  background-color: #238470;
+  box-shadow: 0 2px 0 #1c5d52;
+}
+
+.visit-btn {
+  background-color: #8bacbe;
+  color: white;
+  box-shadow: 0 3px 0 #6a7e8e;
+}
+
+.visit-btn:hover {
+  background-color: #6a7e8e;
+  box-shadow: 0 2px 0 #4e5c66;
+}
+
+/* Right section */
+.right-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: flex-start;
+}
+
+/* Ongoing Printings card*/
+.ongoing-printings {
+  background-color: white;
+  border-radius: 30px;
+  padding: 20px 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 0 8px #d0d0d0;
+  user-select: none;
+}
+
+.ongoing-printings h2 {
+  font-weight: bold;
+  font-size: 32px;
+  text-align: center;
+  margin-left: 0; /* Remove any left margin */
+}
+/*printer icon*/
+.icon {
+  width: 98px;
+  height: 120px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+/* Ongoing Printings icon */
+.icon_ongoing {
+  width: 60px;
+  height: 60px;
+  margin: 10px auto;
+}
+/* History icon */
+.icon_history {
+  width: 98px;
+  height: 100px;
+  display: block;
+  
+}
+
+/* Package and History container */
+.package-history {
+  display: flex;
+  gap: 25px;
+  justify-content: space-between;
+}
+
+/* Individual boxes */
+
+.history {
+  background-color: white;
+  border-radius: 30px;
+  width: 48%;
+  text-align: center;
+  padding: 25px 15px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  box-shadow: 0 0 7px #d0d0d0;
+  user-select: none;
+}
+
+.package h3,
+.history h3 {
+  font-weight: bold;
+  font-size: 20px;
+}
+.package {
+  /* existing styles you provided */
+  background-color: white;
+  border-radius: 30px;
+  width: 48%;
+  text-align: center;
+  padding: 25px 15px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  box-shadow: 0 0 7px #d0d0d0;
+  user-select: none;
+  
+  /* same as history card except - ensure gauge fits nicely inside */
+  position: relative; /* for absolute number inside circle */
+  min-height: 160px;  /* give some vertical space */
+}
+
+/* Gauge SVG (Scalable Vector Graphics)container */
+.package svg {
+  width: 120px;    /* fixed size inside package */
+  height: 120px;
+  transform: rotate(-90deg);
+  display: block;
+  margin: 0 auto;  /* center horizontally */
+}
+
+/* Background circle */
+.bg-circle {
+  fill: none;
+  stroke: #e0e0e0;
+  stroke-width: 12;
+}
+
+/* Progress circle with gradient */
+.progress-circle {
+  fill: none;
+  stroke: url(#blueGradient);
+  stroke-width: 12;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.5s ease;
+}
+
+/* Number inside the circle */
+.pages-left {
+  position: absolute;
+  top: calc(25px + 60px); /* 25px padding + half svg height */
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: Arial, sans-serif;
+  font-size: 36px;
+  font-weight: bold;
+  color: #003E7E;
+  user-select: none;
+  pointer-events: none;
+}
+
+.pages-text {
+  position: absolute;
+  top: calc(60px + 60px + 30px); /* padding + half circle + spacing */
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'source-serif-pro', serif;
+  font-weight: bold;     /* same as h3 */
+  font-size: 20px;       /* same as h3 */
+  color: #000000;
+  user-select: none;
+  pointer-events: none;
+}
+/* package icon */
+.package-icon {
+  max-width: 70px;
+  max-height: 70px;
+  filter: drop-shadow(1px 1px 1px #aaa);
+}
+
+
+.ongoing-printings,
+.package,
+.payment-history,
+.history {
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease;
+  border: 2px solid transparent; /* start transparent */
+}
+
+.ongoing-printings:hover,
+.package:hover,
+.payment-history:hover,
+.history:hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+  border: 3px solid #2f478e; /* blue border */
+  z-index: 10;
+}
+
+
+
+/* Modal */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 100;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.6);
+}
+
+.modal-content {
+  background-color: rgb(231, 229, 229);
+  margin: 8% auto;
+  padding: 20px;
+  width: 60%;
+  max-width: 900px;
+  border-radius: 10px;
+  position: relative;
+}
+
+/* Close button */
+.close {
+  position: absolute;
+  top: 0px;
+  right: 8px;
+  font-size: 32px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #666565;
+}
+.close:hover {
+  color: black;
+}
+
+
+.modal-content h2 {
+  background-color: #4b84a8 ;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 24px;
+  text-align: center;
+  margin: 10px 0 15px 0;
+  display: inline-block;
+  /* Optional to center heading block */
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Table styling */
+.ongoing-table {
+  width: 100%;
+  border-collapse: separate;      /* Change from collapse to separate */
+  border-spacing: 0 10px;         /* Vertical space of 10px between rows */
+  font-size: 18px;
+  font-family: "Source Serif Pro", serif;
+  table-layout: fixed;
+}
+.ongoing-table th,
+.ongoing-table td {
+  padding: 8px 12px;
+  text-align: center;
+  vertical-align: middle;
+  background-color: #ffffff;      /* Move bg color here for each cell */
+  
+}
+/* Rounded corners for entire row */
+/* Round left corners of first cell */
+.ongoing-table tr th:first-child,
+.ongoing-table tr td:first-child {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+/* Round right corners of last cell */
+.ongoing-table tr th:last-child,
+.ongoing-table tr td:last-child {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+/* Rounded corners on modal table's container */
+.modal-content table {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* Status badges */
+.status {
+  padding: 5px 12px;
+  border-radius: 15px;
+  font-weight: bold;
+  font-size: 12px;
+  color: white;
+  display: inline-block;
+  white-space: nowrap;
+  width: 100px;
+}
+
+/* Specific status colors */
+.status.not-started {
+  background-color: #e74c3c; /* Red */
+}
+
+.status.in-progress {
+  background-color: #3498db; /* Blue */
+}
+
+.status.finished {
+  background-color: #16a085; /* Greenish */
+}
+.status.verifying{
+  background-color: #3498db;
+}
+
+
+/* History table */
+.history-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 10px;
+  font-size: 18px;
+  font-family: "Source Serif Pro", serif;
+  table-layout: fixed;
+}
+
+.history-table th,
+.history-table td {
+  padding: 6px 12px;
+  text-align: center;
+  vertical-align: middle;
+  background-color: #ffffff;
+  box-sizing: border-box;
+}
+
+.history-table tr th:first-child,
+.history-table tr td:first-child {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+/* Round right corners of last cell */
+.history-table tr th:last-child,
+.history-table tr td:last-child {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+/* Set column widths for history table,kept the structure sem as ongoing printings table */
+.history-table th:nth-child(1),
+.history-table td:nth-child(1) { width: 20%; }
+
+.history-table th:nth-child(2),
+.history-table td:nth-child(2) { width: 35%; }
+
+.history-table th:nth-child(3),
+.history-table td:nth-child(3) { width: 15%; }
+
+.history-table th:nth-child(4),
+.history-table td:nth-child(4) { width: 15%; }
+
+.history-table th:nth-child(5),
+.history-table td:nth-child(5) { width: 15%; }
+
+
+/* Bkash Popup */
+#bkash-popup-overlay {
+  display: none;
+  position: fixed;
+  top: 0px; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 9999;
+}
+
+#bkash-popup {
+  width: 420px;
+  background-color:#d12d5c;
+  border-radius: 10px;
+  padding: 0;
+  margin: 100px auto;
+  border: 3px dashed #000;
+  position: relative;
+  top: 100px;
+}
+
+#bkash-popup .logo-circle {
+  width: 60px;
+  height: 60px;
+  background-color:white;
+  border-radius: 50%;
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#bkash-popup .logo-circle img {
+  width: 55px;
+  border-radius: 50%;
+}
+
+
+/* White inner box */
+.bkash-inner {
+  background: white;
+  border-radius: 10px;
+  padding: 50px 20px 25px;
+  text-align: center;
+  margin: 20px 20px 20px 20px;
+}
+
+.bkash-inner h3 {
+  margin: 0 0 15px;
+  font-size: 16px;
+  color: black;
+}
+
+.bkash-inner input {
+  width: 80%;
+  padding: 12px;
+  border: none;
+  border-radius: 20px;
+  background: #f1f1f1;
+  text-align: center;
+
+}
+
+.bkash-inner .submit-btn {
+  margin-top: 15px;
+  background-color: #19a28d;
+  color: white;
+  padding: 10px 30px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+/* Add these new styles */
+.top-boxes {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.small-box {
+  flex: 1;
+  padding: 15px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.small-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.small-box h2 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.ongoing-printings {
+  display: block;
+  width: auto;
+  /* Remove any existing width/height constraints */
+}
+
+.payment-history .icon_payment {
+  width: 60px;
+  height: 60px;
+  margin: 10px auto;
+}
+
+/* Styling for icons inside boxes */
+.icon_ongoing, .icon_payment, .icon_calculator {
+  width: 60px;
+  height: 60px;
+  margin: 10px auto;
+  display: block;
+}
+
+/* Adjust existing styles for ongoing printings if needed */
+.icon_ongoing {
+  width: 60px;
+  height: 60px;
+  margin: 10px auto;
+}
+
+/* Keep your existing styles below */
+
+/* General box styling */
+.box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 25px;
+  background-color: white;
+  border-radius: 30px; /* Increased from 20px to 30px for a very rounded look */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  font-family: 'Source Serif Pro', serif;
+  font-size: 16px;
+  color: #333;
+  transition: transform 0.2s, box-shadow 0.2s;
+  min-height: 180px;
+  width: 100%;
+}
+
+/* Larger icons for ongoing printings and payment history boxes */
+.ongoing-printings img, .payment-history img {
+  width: 100px; /* Increased size from 80px to 100px */
+  height: 100px; /* Increased size from 80px to 100px */
+  margin-bottom: 15px; /* Increased space between icon and text */
+  display: block;
+}
+
+/* Caption styling - directly under the icons */
+.ongoing-printings h2, .payment-history h2 {
+  font-size: 1.2rem;
+  margin: 0;
+  padding: 0;
+  font-weight: bold;
+  color: #444;
+  order: 2; /* Ensures text appears after icon in flex layout */
+}
+
+/* Box layout for ongoing printings and payment history */
+.ongoing-printings, .payment-history {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Payment history table styling */
+.payment-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.payment-table th, .payment-table td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: center;
+}
+
+.payment-table th {
+  background-color: #f2f2f2;
+  color: #333;
+  font-weight: bold;
+}
+
+.payment-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.payment-table tr:hover {
+  background-color: #f0f0f0;
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+  .main-content {
+    flex-direction: column;
+  }
+
+  .left-section,
+  .right-section {
+    width: 100%;
+  }
+
+  .package-history {
+    flex-direction: column;
+  }
+
+  .package,
+  .history {
+    width: 100%;
+  }
+}
