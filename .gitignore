@@ -1,0 +1,19 @@
+# Ignore target directory and build artifacts
+/target
+*.class
+*.jar
+*.war
+
+# Ignore logs
+*.log
+
+# Ignore IDE files
+/.idea
+*.iml
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
+
+# Ignore environment files
+.env
