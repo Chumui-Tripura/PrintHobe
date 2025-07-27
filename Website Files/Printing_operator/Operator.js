@@ -1,5 +1,4 @@
 /* ======================== For Time ========================*/
-
 function updatePrintingTime() {
   const user = JSON.parse(sessionStorage.getItem("user"));
   const selectedTime = document.getElementById("printingTime").value;
@@ -9,15 +8,31 @@ function updatePrintingTime() {
     return;
   }
 
-  fetch(`http://localhost:8080/api/operators/printer/${user.operatorId}/available-till`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ time: selectedTime }),
-  })
+  const now = new Date();
+  const [hours, minutes] = selectedTime.split(":").map(Number);
+  const selectedDateTime = new Date();
+  selectedDateTime.setHours(hours, minutes, 0, 0);
+
+  if (selectedDateTime <= now) {
+    alert("You cannot select a past time. Please choose a future time.");
+    return;
+  }
+
+  fetch(
+    `http://localhost:8080/api/operators/printer/${user.operatorId}/available-till`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ time: selectedTime }),
+    }
+  )
     .then((res) => {
-      if (!res.ok) throw new Error("Failed to update printing time");
+      if (!res.ok)
+        return res.text().then((msg) => {
+          throw new Error(msg);
+        });
       return res.text();
     })
     .then((msg) => {
@@ -25,7 +40,7 @@ function updatePrintingTime() {
     })
     .catch((err) => {
       console.error(err);
-      alert("Error updating printing time");
+      alert(err.message || "Error updating printing time");
     });
 }
 
@@ -61,13 +76,12 @@ document.addEventListener("DOMContentLoaded", function () {
         data.availableTill || "00:00";
 
       const statusBtn = document.getElementById("printerStatusBtn");
-
       if (statusBtn) {
+        const currentStatus = user.printerStatus;
+        updatePrinterButtonUI(currentStatus);
         statusBtn.addEventListener("click", function () {
-          const user = JSON.parse(sessionStorage.getItem("user"));
-          const newStatus = this.textContent.includes("Available")
-            ? "AVAILABLE"
-            : "NOT_AVAILABLE";
+          const newStatus =
+            user.printerStatus === "AVAILABLE" ? "NOT_AVAILABLE" : "AVAILABLE";
 
           fetch(
             `http://localhost:8080/api/operators/printer/${user.operatorId}/status?status=${newStatus}`,
@@ -77,17 +91,15 @@ document.addEventListener("DOMContentLoaded", function () {
           )
             .then((res) => {
               if (!res.ok) throw new Error("Failed to update status");
-              return res.text();
+              return res.text(); // or res.json()
             })
             .then((msg) => {
+              // Update sessionStorage
+              user.printerStatus = newStatus;
+              sessionStorage.setItem("user", JSON.stringify(user));
+
               // Update the button UI
-              if (newStatus === "AVAILABLE") {
-                statusBtn.textContent = "Make My Printer Unavailable";
-                statusBtn.classList.add("unavailable");
-              } else {
-                statusBtn.textContent = "Make My Printer Available";
-                statusBtn.classList.remove("unavailable");
-              }
+              updatePrinterButtonUI(newStatus);
               alert(msg);
             })
             .catch((err) => {
@@ -103,6 +115,20 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
+function updatePrinterButtonUI(status) {
+  const statusBtn = document.getElementById("printerStatusBtn");
+
+  if (status === "AVAILABLE") {
+    statusBtn.textContent = "Make My Printer Unavailable";
+    statusBtn.classList.remove("green");
+    statusBtn.classList.add("red");
+  } else {
+    statusBtn.textContent = "Make My Printer Available";
+    statusBtn.classList.remove("red");
+    statusBtn.classList.add("green");
+  }
+}
+
 function renderPrintJobs(documents) {
   const tbody = document.getElementById("printJobsList");
   tbody.innerHTML = "";
@@ -115,8 +141,8 @@ function renderPrintJobs(documents) {
   documents.forEach((doc) => {
     const row = document.createElement("tr");
 
-    const statusDisplay = doc.status === "APPROVED" ? "In Progress" : doc.status;
-    
+    const statusDisplay = doc.status === "APPROVED" ? "In Progress" : "Pending";
+
     row.innerHTML = `
       <td>${doc.referenceId || "-"}</td>
       <td>${doc.originalFileName}</td>
@@ -124,15 +150,23 @@ function renderPrintJobs(documents) {
       <td>${doc.copies}</td>
       <td class="doc-status">${statusDisplay}</td>
       <td>
-        ${doc.status !== "APPROVED" && doc.status !== "COMPLETED" && doc.status !== "REJECTED"
-          ? `<button onclick="startPrinting(this, '${doc.filePath}', '${doc.documentId}', '${doc.referenceId || ""}')">Print</button>`
-          : ""
+        ${
+          doc.status !== "APPROVED"
+            ? `<button onclick="startPrinting(this, '${doc.filePath}', '${
+                doc.documentId
+              }', '${
+                doc.referenceId || ""
+              }')">Print</button><button onclick="rejectDocument(this, '${
+                doc.documentId
+              }', '${doc.referenceId || ""}')">Reject</button>`
+            : ""
         }
-        ${doc.status === "APPROVED"
-          ? `<button onclick="markCompleted(this, '${doc.documentId}')">Completed</button>`
-          : ""
+        ${
+          doc.status === "APPROVED"
+            ? `<button onclick="markCompleted(this, '${doc.documentId}')">Completed</button>`
+            : ""
         }
-        <button onclick="rejectDocument(this, '${doc.documentId}', '${doc.referenceId || ""}')">Reject</button>
+        
       </td>
     `;
 
@@ -142,7 +176,7 @@ function renderPrintJobs(documents) {
 
 function startPrinting(button, filePath, documentId, referenceId) {
   // 1. Open the PDF in a new tab
-  window.open(`http://localhost:8080${filePath}`, '_blank');
+  window.open(`http://localhost:8080${filePath}`, "_blank");
 
   // 2. Approve the document in backend
   fetch(`http://localhost:8080/api/documents/${documentId}/approve`, {
@@ -153,9 +187,12 @@ function startPrinting(button, filePath, documentId, referenceId) {
 
       // 3. If referenceId exists, also approve payment
       if (referenceId) {
-        return fetch(`http://localhost:8080/api/payments/package/${referenceId}/status?status=APPROVED`, {
-          method: "PUT",
-        });
+        return fetch(
+          `http://localhost:8080/api/payments/package/${referenceId}/status?status=APPROVED`,
+          {
+            method: "PUT",
+          }
+        );
       }
     })
     .then(() => {
@@ -167,7 +204,6 @@ function startPrinting(button, filePath, documentId, referenceId) {
       const buttonCell = row.querySelector("td:last-child");
       buttonCell.innerHTML = `
         <button onclick="markCompleted(this, '${documentId}')">Completed</button>
-        <button onclick="rejectDocument(this, '${documentId}', '${referenceId || ""}')">Reject</button>
       `;
     })
     .catch((err) => {
@@ -175,7 +211,6 @@ function startPrinting(button, filePath, documentId, referenceId) {
       alert("Failed to start printing");
     });
 }
-
 
 function markCompleted(button, documentId) {
   fetch(`http://localhost:8080/api/documents/${documentId}/complete`, {
@@ -207,8 +242,6 @@ function markCompleted(button, documentId) {
     });
 }
 
-
-
 function rejectDocument(button, documentId, referenceId) {
   fetch(`http://localhost:8080/api/documents/${documentId}/reject`, {
     method: "PUT",
@@ -217,15 +250,18 @@ function rejectDocument(button, documentId, referenceId) {
       if (!res.ok) throw new Error("Failed to reject document");
       if (referenceId) {
         // Reject payment if reference exists
-        return fetch(`http://localhost:8080/api/payments/package/${referenceId}/status?status=REJECTED`, {
-          method: "PUT",
-        });
+        return fetch(
+          `http://localhost:8080/api/payments/package/${referenceId}/status?status=REJECTED`,
+          {
+            method: "PUT",
+          }
+        );
       }
     })
     .then(() => {
       const row = button.closest("tr");
       row.querySelector(".doc-status").textContent = "Rejected";
-      
+
       // Disable or remove all action buttons
       const buttonCell = row.querySelector("td:last-child");
       buttonCell.innerHTML = `<span style="color: red; font-weight: bold;">Rejected</span>`;
@@ -240,7 +276,6 @@ function rejectDocument(button, documentId, referenceId) {
       alert("Error rejecting document");
     });
 }
-
 
 function renderPackageRequests(packageRequests) {
   const tbody = document.getElementById("printPackagesList");

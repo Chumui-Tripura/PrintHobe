@@ -10,9 +10,9 @@
 
 body {
   margin: 0;
-  font-family: 'Source Serif Pro';
-  background-color: #fff;
-  color: #1e1e1e;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  background-color: #f0f8ff;
+  color: #000000;
   width: 100vw;
   overflow: hidden; /* This is for no scrolling in homepage */
 }
@@ -45,17 +45,19 @@ body {
 }
 
 .login-button {
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: 15px;
   padding: 8px 15px;
   background-color: #ffffff;
   border: 2px solid #203162;
   border-radius: 5px;
-  font-weight: bold;
+  font-weight: 800;
   cursor: pointer;
 }
 
 .main-content {
   text-align: center;
-  padding: 20px 0px;
+  padding: 20px 20px;
   height: 100vh;
 }
 
@@ -67,29 +69,37 @@ body {
 }
 
 .welcome_section h1 {
-  font-size: 47px;
-  margin: 5px 0;
-  color: #203162;
+  font-family:Georgia, 'Times New Roman', Times, serif;
+  font-size: 45px;
+  margin: 25px 0;
+  color: #293241;
 }
 
 .welcome_section .brand {
   color: #19a28d;
   font-family: 'Bukhari Script';
   margin-bottom: 5px;
+  font-size: 50px;
+}
+
+.welcome_section h2{
+  font-family:Georgia, 'Times New Roman', Times, serif;
+  font-size: 37px;
 }
 
 .subtitle {
   font-size: 27px;
-  color: #203162;
+  color: #293241;
   margin-bottom: 25px;
   font-weight: bold;
 }
+
 
 .operator-signup-btn {
   background-color: #fff;
   border: 1px solid #000;
   /* Thin black border */
-  color: #002147;
+  color: #293241;
   font-size: 16px;
   font-weight: bold;
   margin-bottom: 25px;
@@ -97,7 +107,7 @@ body {
   text-align: center;
   border-radius: 8px;
   cursor: pointer;
-  box-shadow: 5px 5px 0 #ff9d42;
+  box-shadow: 5px 5px 0 #f39c12;
   /* Orange drop shadow */
   transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
   line-height: 1.4;
@@ -131,9 +141,9 @@ body {
 }
 
 .step-header {
-  background-color: #19a28d;
+  background-color: #0d9675;
   color: white;
-  padding: 10px;
+  padding: 20px 10px;
   font-size: 25px;
   font-weight: bold;
   border-top-left-radius: 5px;

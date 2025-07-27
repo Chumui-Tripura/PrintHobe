@@ -79,12 +79,43 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Enable or disable the Use Package button
         const usePackageBtn = document.querySelector(".btn.use-package");
+        const payNowBtn = document.querySelector(".btn.pay-now");
+
+
         if (data.canUsePackage) {
           usePackageBtn.disabled = false;
           usePackageBtn.classList.remove("disabled");
         } else {
           usePackageBtn.disabled = true;
           usePackageBtn.classList.add("disabled");
+        }
+
+        if (data.availableTill) {
+          const availableTill = new Date(data.availableTill);
+
+          if (estTime > availableTill) {
+            console.log("Estimated is more than Available");
+            // Disable both buttons
+            usePackageBtn.disabled = true;
+            payNowBtn.disabled = true;
+
+            usePackageBtn.style.backgroundColor = "#878787";
+            payNowBtn.style.backgroundColor = "#878787";
+
+            usePackageBtn.style.pointerEvents = "none";
+            payNowBtn.style.pointerEvents = "none";
+
+            // Optional: show a message to the user
+            alert(
+              "Cannot submit document. Estimated completion time exceeds printer availability."
+            );
+          } else {
+            // Enable the Pay Now button
+            payNowBtn.disabled = false;
+            payNowBtn.style.pointerEvents = "auto";
+            usePackageBtn.style.backgroundColor = "#19a28d";
+            payNowBtn.style.backgroundColor = "#f39c12";
+          }
         }
 
         // OPTIONAL: Store the response globally for use in the next step
@@ -176,55 +207,57 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   document.querySelector(".submit-btn").addEventListener("click", (e) => {
-  e.preventDefault();
-  const referenceId = document.querySelector(".bkash-inner input").value.trim();
-  if (!referenceId) {
-    alert("Please enter a reference number.");
-    return;
-  }
+    e.preventDefault();
+    const referenceId = document
+      .querySelector(".bkash-inner input")
+      .value.trim();
+    if (!referenceId) {
+      alert("Please enter a reference number.");
+      return;
+    }
 
-  const fileInput = document.getElementById("fileInput");
-  if (!fileInput.files[0]) {
-    alert("Please upload a file before submitting payment.");
-    return;
-  }
+    const fileInput = document.getElementById("fileInput");
+    if (!fileInput.files[0]) {
+      alert("Please upload a file before submitting payment.");
+      return;
+    }
 
-  const upload = window.latestUpload;
-  const user = JSON.parse(sessionStorage.getItem("user"));
+    const upload = window.latestUpload;
+    const user = JSON.parse(sessionStorage.getItem("user"));
 
-  const formData = new FormData();
-  formData.append("referenceId", referenceId);
-  formData.append("userId", user.userId);
-  formData.append("operatorId", 9); // OS Lab
-  formData.append("printerId", 9); // id of the OS lab printer operator
-  formData.append("amount", upload.amount);
-  formData.append("pages", upload.pages);
-  formData.append("copies", upload.copies);
-  formData.append("color", upload.color);
-  formData.append("sides", document.getElementById("sides").value);
-  formData.append("punching", document.getElementById("punching").value);
-  formData.append("paymentFor", "PRINTING");
-  formData.append("file", fileInput.files[0]);
+    const formData = new FormData();
+    formData.append("referenceId", referenceId);
+    formData.append("userId", user.userId);
+    formData.append("operatorId", 9); // OS Lab
+    formData.append("printerId", 9); // id of the OS lab printer operator
+    formData.append("amount", upload.amount);
+    formData.append("pages", upload.pages);
+    formData.append("copies", upload.copies);
+    formData.append("color", upload.color);
+    formData.append("sides", document.getElementById("sides").value);
+    formData.append("punching", document.getElementById("punching").value);
+    formData.append("paymentFor", "PRINTING");
+    formData.append("file", fileInput.files[0]);
 
-  fetch("http://localhost:8080/api/documents/submit-payment", {
-    method: "POST",
-    body: formData,
-  })
-    .then((res) => {
-      if (!res.ok) {
-        return res.text().then((msg) => {
-          throw new Error(msg);
-        });
-      }
-      return res.text();
+    fetch("http://localhost:8080/api/documents/submit-payment", {
+      method: "POST",
+      body: formData,
     })
-    .then((msg) => {
-      alert(msg);
-      window.location.href = "../User/user.html";
-    })
-    .catch((err) => {
-      console.error("Payment Submission Error:", err);
-      alert("Failed to submit payment and document: " + err.message);
-    });
-});
+      .then((res) => {
+        if (!res.ok) {
+          return res.text().then((msg) => {
+            throw new Error(msg);
+          });
+        }
+        return res.text();
+      })
+      .then((msg) => {
+        alert(msg);
+        window.location.href = "../User/user.html";
+      })
+      .catch((err) => {
+        console.error("Payment Submission Error:", err);
+        alert("Failed to submit payment and document: " + err.message);
+      });
+  });
 });

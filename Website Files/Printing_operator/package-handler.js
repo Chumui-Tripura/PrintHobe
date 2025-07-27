@@ -58,26 +58,21 @@ function fadeOutAndRemoveRow(row) {
 
 // Function to update metrics after package actions
 function updatePackageMetrics() {
-  // This is a placeholder function
-  // You can implement logic to update your statistics or counters
-  // e.g., count visible rows, sum up amounts, etc.
-  
-  // Example: Count accepted packages
+
   const acceptedPackages = document.querySelectorAll('.package-status[style*="display: inline-block"]').length;
   console.log(`Accepted packages: ${acceptedPackages}`);
-  
-  // You could update your stats display or send this data to a backend
+
 }
 
-// Initialize package table when the document is loaded
+
 document.addEventListener('DOMContentLoaded', function() {
-  // Hide all status messages initially
+
   const statusMessages = document.querySelectorAll('.package-status');
   statusMessages.forEach(msg => {
     msg.style.display = 'none';
   });
   
-  // Add any other initialization logic here
+
 });
 
 // Example function for adding new package rows (can be connected to a form or API)

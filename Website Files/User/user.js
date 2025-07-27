@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   /* ============================== Backend Of Ongoing Printings ============================== */
 
-  if (ongoingCard && ongoingModal) {
+  if (ongoingCard) {
     ongoingCard.onclick = function () {
       ongoingModal.style.display = "block";
       ongoingTableBody.innerHTML = "";
@@ -69,7 +69,8 @@ document.addEventListener("DOMContentLoaded", function () {
           documents.forEach((doc) => {
             const row = document.createElement("tr");
             row.innerHTML = `
-            <td>${doc.dateTime ?? ""}</td>
+            <td>${doc.date}</td>
+            <td>${doc.time}</td>
             <td>${doc.documentName}</td>
             <td>${doc.pages}</td>
             <td>${doc.type}</td>
@@ -77,7 +78,6 @@ document.addEventListener("DOMContentLoaded", function () {
             <td><span class="status ${getStatusClass(
               doc.status
             )}">${formatStatus(doc.status)}</span></td>
-            <td></td> <!-- You don't have estimated end time now -->
           `;
             ongoingTableBody.appendChild(row);
           });
@@ -99,7 +99,7 @@ document.addEventListener("DOMContentLoaded", function () {
         return "verifying";
       case "NOT_STARTED":
         return "not-started";
-      case "IN_PROGRESS":
+      case "APPROVED":
         return "in-progress";
       case "FINISHED":
         return "finished";
@@ -117,9 +117,37 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   /* ============================== Backend Of Ongoing Printings ============================== */
+
+
+  function loadPrintingHistory(userId) {
+  fetch(`http://localhost:8080/api/documents/user-printing-history/${userId}`)
+    .then(response => response.json())
+    .then(data => {
+      const tbody = document.querySelector("#historyModal tbody");
+      tbody.innerHTML = "";
+
+      
+      data.forEach(doc => {
+        const statusClass = doc.status === "REJECTED" ? "status-rejected" : "status-approved";
+        const row = `
+          <tr>
+            <td>${doc.date}</td>
+            <td>${doc.time}</td>
+            <td>${doc.fileName}</td>
+            <td>${doc.numberOfPages}</td>
+            <td>${doc.color}</td>
+            <td>${doc.amount}</td>
+            <td class="${statusClass}">${doc.status}</td>
+          </tr>`;
+        tbody.innerHTML += row;
+      });
+    });
+}
+
   // Open history modal
   if (historyCard && historyModal) {
     historyCard.onclick = function () {
+      loadPrintingHistory(user.userId);
       historyModal.style.display = "block";
     };
   }
@@ -206,9 +234,11 @@ document.addEventListener("DOMContentLoaded", () => {
 const paymentHistory = document.querySelector(".payment-history");
 const paymentHistoryModal = document.getElementById("paymentHistoryModal");
 const closePaymentHistory = document.getElementById("closePaymentHistory");
+const user = JSON.parse(sessionStorage.getItem("user"));
 
 paymentHistory.addEventListener("click", () => {
   paymentHistoryModal.style.display = "block";
+  fetchPaymentHistory(user.userId);
 });
 
 closePaymentHistory.addEventListener("click", () => {
@@ -220,6 +250,54 @@ window.addEventListener("click", (event) => {
     paymentHistoryModal.style.display = "none";
   }
 });
+
+
+
+// Function to map status for styling
+function getStatusClass(status) {
+  switch (status.toUpperCase()) {
+    case "REJECTED":
+      return "status rejected";
+    case "APPROVED":
+      return "status approved";
+    case "VERIFYING":
+      return "status pending";
+    default:
+      return "status";
+  }
+}
+
+function fetchPaymentHistory(userId) {
+  fetch(`http://localhost:8080/api/payments/user-payment-history/${userId}`)
+    .then((response) => response.json())
+    .then((data) => {
+      const tableBody = document.getElementById("paymentHistoryBody");
+      tableBody.innerHTML = ""; 
+
+      data.forEach((entry) => {
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+            <td>${entry.date}</td>
+            <td>${entry.time}</td>
+            <td>${entry.referenceId}</td>
+            <td>${entry.amount} Tk</td>
+            <td>${
+              entry.paymentFor === "PACKAGE" ? "PACKAGE" : entry.paymentFor
+            }</td>
+            <td><span class="${getStatusClass(entry.paymentStatus)}">${
+          entry.paymentStatus.charAt(0) +
+          entry.paymentStatus.slice(1).toLowerCase()
+        }</span></td>
+          `;
+
+        tableBody.appendChild(row);
+      });
+    })
+    .catch((error) => {
+      console.error("Error fetching payment history:", error);
+    });
+}
 
 /* ========================= Printer Details ========================= */
 
@@ -251,6 +329,10 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  function preventClick(e) {
+    e.preventDefault();
+  }
+
   // ======= Fetch Printer Summary and Update UI =======
   fetch("http://localhost:8080/api/users/printer/9/summary")
     .then((res) => res.json())
@@ -266,19 +348,43 @@ document.addEventListener("DOMContentLoaded", () => {
       // Update printer name
       document.getElementById("printerName").textContent = data.printerName;
 
+      const availableTillElement = document.getElementById("availableTill");
+    if (data.available && data.availableTill) {
+      availableTillElement.textContent = `Available Till: ${data.availableTill}`;
+      availableTillElement.style.display = "block";
+    } else {
+      availableTillElement.textContent = ``;
+      availableTillElement.style.display = "block";
+    }
+
       // Update cost
       document.getElementById("costText").innerHTML = `
-        Print Cost: ${data.colorCost}tk (Color), ${data.blackWhiteCost}tk <br /> (Black & white)
+        Print Cost:<br/>${data.colorCost} tk (Color) <br/>${data.blackWhiteCost} tk (B&W)
       `;
 
       // Update availability
       const availabilityBtn = document.getElementById("availabilityBtn");
+      const visitBtn = document.querySelector(".visit-btn");
+
+
       if (data.available) {
         availabilityBtn.textContent = "Available Now";
-        availabilityBtn.style.backgroundColor = "#4CAF50";
+        availabilityBtn.style.backgroundColor = "#0d9675";
+
+       visitBtn.classList.remove("disabled");
+      visitBtn.removeAttribute("disabled");
+      visitBtn.style.pointerEvents = "auto";
+      visitBtn.style.opacity = "1";
       } else {
-        availabilityBtn.textContent = "Currently Busy";
-        availabilityBtn.style.backgroundColor = "#f44336";
+        availabilityBtn.textContent = "Not Available";
+        availabilityBtn.style.backgroundColor = "#878787";
+
+        // Disable the visit link
+        visitBtn.classList.add("disabled");
+      visitBtn.setAttribute("disabled", "true");
+      visitBtn.style.pointerEvents = "none";
+      visitBtn.style.opacity = "1";
+      visitBtn.style.backgroundColor = "#878787ff";
       }
 
       // Setting the operator phone number to local storage for easy access
@@ -329,6 +435,7 @@ document.addEventListener("DOMContentLoaded", () => {
           });
       });
     })
+    
     .catch((err) => {
       console.error("Failed to fetch printer summary:", err);
     });

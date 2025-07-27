@@ -11,8 +11,6 @@
 .container {
   max-width: 1100px;
   width: 100%; /* so it shrinks on smaller screens */
-  padding-left: 15px;
-  padding-right: 15px;
   padding-bottom: 15px;
   margin: auto;
   background-color: rgb(243, 238, 238); 
@@ -65,9 +63,9 @@
   display: flex;
   align-items: center;
   padding: 25px 20px;
-  margin: 30px 15px 10px 0;
-  background-color: #f79f5f;
-  border-radius: 20px;
+  margin: 30px 0 0 0;
+  background-color: #f39c12;
+  border-radius: 20px 20px 0 0;
 }
 
 .banner-text {
@@ -126,9 +124,9 @@
 .left-section {
   background-color: white;
   width: 30%;
-  height: 60%;
+  height: 64.5%;
   border-radius: 30px;
-  padding: 30px 15px 35px;
+  padding: 30px 15px 30px;
   box-sizing: border-box;
   text-align: center;
   display: flex;
@@ -141,6 +139,7 @@
   font-size: 22px;
   line-height: 1.1;
   user-select: none;
+  margin: 15px 0;
 }
 
 .cost-text {
@@ -159,32 +158,39 @@
   border: none;
   width: 100%;
   cursor: pointer;
-  font-family: 'Times New Roman', serif;
+  font-family: Georgia, 'Times New Roman', Times, serif;
   user-select: none;
   transition: background-color 0.3s ease;
-  box-shadow: 0 3px 0 #238470;
 }
 
 .available-btn {
   background-color: #2ca994;
   color: white;
   margin-bottom: 0px;
+  cursor:default;
 }
 
 .available-btn:hover {
   background-color: #238470;
-  box-shadow: 0 2px 0 #1c5d52;
 }
 
+.available-till {
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: 20px;
+  margin: 0;
+  color:#0d9675;;
+  font-weight: 800;
+}
+
+
 .visit-btn {
-  background-color: #8bacbe;
+  background-color: #228be6;
   color: white;
-  box-shadow: 0 3px 0 #6a7e8e;
+  text-decoration: none;
 }
 
 .visit-btn:hover {
-  background-color: #6a7e8e;
-  box-shadow: 0 2px 0 #4e5c66;
+  background-color: #43a3ef;
 }
 
 /* Right section */
@@ -382,11 +388,16 @@
   background-color: rgb(231, 229, 229);
   margin: 8% auto;
   padding: 20px;
-  width: 60%;
-  max-width: 900px;
+  width: 80%;
   border-radius: 10px;
   position: relative;
 }
+
+.table-wrapper {
+  overflow-x: auto;
+  max-width: 100%;
+}
+
 
 /* Close button */
 .close {
@@ -424,17 +435,17 @@
   border-collapse: separate;      /* Change from collapse to separate */
   border-spacing: 0 10px;         /* Vertical space of 10px between rows */
   font-size: 18px;
-  font-family: "Source Serif Pro", serif;
+  font-family: Georgia, 'Times New Roman', Times, serif;
   table-layout: fixed;
 }
 .ongoing-table th,
 .ongoing-table td {
   padding: 8px 12px;
-  text-align: center;
+  text-align: left;
   vertical-align: middle;
   background-color: #ffffff;      /* Move bg color here for each cell */
-  
 }
+
 /* Rounded corners for entire row */
 /* Round left corners of first cell */
 .ongoing-table tr th:first-child,
@@ -449,6 +460,29 @@
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
 }
+
+.ongoing-table th:nth-child(1),
+.ongoing-table td:nth-child(1) { width: 15%; }
+
+.ongoing-table th:nth-child(2),
+.ongoing-table td:nth-child(2) { width: 15%; }
+
+.ongoing-table th:nth-child(3),
+.ongoing-table td:nth-child(3) { width: 40%; }
+
+.ongoing-table th:nth-child(4),
+.ongoing-table td:nth-child(4) { width: 15%; }
+
+.ongoing-table th:nth-child(5),
+.ongoing-table td:nth-child(5) { width: 15%; }
+
+.ongoing-table th:nth-child(6),
+.ongoing-table td:nth-child(6) { width: 15%; }
+
+.ongoing-table th:nth-child(7),
+.ongoing-table td:nth-child(7) { width: 15%; }
+
+
 /* Rounded corners on modal table's container */
 .modal-content table {
   border-radius: 10px;
@@ -457,12 +491,11 @@
 
 /* Status badges */
 .status {
-  padding: 5px 12px;
+  padding: 5px 8px;
   border-radius: 15px;
   font-weight: bold;
-  font-size: 12px;
+  font-size: 18px;
   color: white;
-  display: inline-block;
   white-space: nowrap;
   width: 100px;
 }
@@ -490,14 +523,14 @@
   border-collapse: separate;
   border-spacing: 0 10px;
   font-size: 18px;
-  font-family: "Source Serif Pro", serif;
+  font-family: Georgia, 'Times New Roman', Times, serif;
   table-layout: fixed;
 }
 
 .history-table th,
 .history-table td {
   padding: 6px 12px;
-  text-align: center;
+  text-align: left;
   vertical-align: middle;
   background-color: #ffffff;
   box-sizing: border-box;
@@ -516,21 +549,42 @@
   border-bottom-right-radius: 10px;
 }
 
+
+.status-approved {
+  color: #19a28d;
+  font-weight: bold;
+}
+
+.status-rejected {
+  color: #ff3a3a;
+  font-weight: bold;
+}
+
+
 /* Set column widths for history table,kept the structure sem as ongoing printings table */
 .history-table th:nth-child(1),
-.history-table td:nth-child(1) { width: 20%; }
+.history-table td:nth-child(1) { width: 15%; }
 
 .history-table th:nth-child(2),
-.history-table td:nth-child(2) { width: 35%; }
+.history-table td:nth-child(2) { width: 15%; }
 
 .history-table th:nth-child(3),
-.history-table td:nth-child(3) { width: 15%; }
+.history-table td:nth-child(3) { width: 30%; }
 
 .history-table th:nth-child(4),
 .history-table td:nth-child(4) { width: 15%; }
 
 .history-table th:nth-child(5),
 .history-table td:nth-child(5) { width: 15%; }
+
+.history-table th:nth-child(5),
+.history-table td:nth-child(5) { width: 15%; }
+
+.history-table th:nth-child(6),
+.history-table td:nth-child(6) { width: 15%; }
+
+.history-table th:nth-child(7),
+.history-table td:nth-child(7) { width: 15%; }
 
 
 /* Bkash Popup */
@@ -664,7 +718,6 @@
   margin: 10px auto;
 }
 
-/* Keep your existing styles below */
 
 /* General box styling */
 .box {
@@ -677,9 +730,9 @@
   border-radius: 30px; /* Increased from 20px to 30px for a very rounded look */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
-  font-family: 'Source Serif Pro', serif;
+  font-family: Georgia, 'Times New Roman', Times, serif;
   font-size: 16px;
-  color: #333;
+  color: #000000;
   transition: transform 0.2s, box-shadow 0.2s;
   min-height: 180px;
   width: 100%;
@@ -695,11 +748,10 @@
 
 /* Caption styling - directly under the icons */
 .ongoing-printings h2, .payment-history h2 {
-  font-size: 1.2rem;
+  font-size: 20px;
   margin: 0;
   padding: 0;
   font-weight: bold;
-  color: #444;
   order: 2; /* Ensures text appears after icon in flex layout */
 }
 
@@ -709,6 +761,10 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+.ongoing-table tr:nth-child(even) {
+  background-color: #f9f9f9;
 }
 
 /* Payment history table styling */
@@ -736,6 +792,19 @@
 
 .payment-table tr:hover {
   background-color: #f0f0f0;
+}
+
+.status.approved {
+  color: #19a28d;
+  font-size: 16px;
+}
+.status.rejected {
+  color: #ff3a3a;
+  font-size: 16px;
+}
+.status.pending {
+  color: #ff9d42;
+  font-size: 16px;
 }
 
 /* Responsive */

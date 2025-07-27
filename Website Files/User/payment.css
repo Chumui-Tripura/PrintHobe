@@ -70,11 +70,11 @@ h1.headline {
   text-align: center;
   margin-bottom: 15px;
   margin-top: 0px;
-  color: #3d5d80 ;
+  color: #203162 ;
 }
 
 h1.headline .pay {
-  color: #ff9d42; /* orange */
+  color: #f39c12 ; /* orange */
 }
 
 h1.headline .relax {
@@ -105,6 +105,7 @@ h1.headline .relax {
   border-radius: 15px;
   padding: 15px 20px;
   box-shadow: 0 0 6px rgb(0 0 0 / 0.1);
+  width: 90%;
 }
 
 .pref-header {
@@ -149,7 +150,7 @@ h1.headline .relax {
   padding: 6px 8px;
   font-weight: 400;
   color: #444;
-  font-family: 'Source Serif Pro', serif;
+  font-family: Georgia, 'Times New Roman', Times, serif;
   font-size: 13px;
   outline: none;
 }
@@ -175,6 +176,7 @@ h1.headline .relax {
 .use-package {
   background-color: #19a28d;
   color: white;
+  font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 .use-package:hover {
@@ -189,8 +191,9 @@ h1.headline .relax {
 
 
 .pay-now {
-  background-color: #ff9d42;
+  background-color: #f39c12;
   color: white;
+  font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 .pay-now:hover {
