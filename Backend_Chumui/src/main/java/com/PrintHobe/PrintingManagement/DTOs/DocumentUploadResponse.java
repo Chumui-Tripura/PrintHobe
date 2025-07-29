@@ -9,6 +9,12 @@ public class DocumentUploadResponse {
     private String originalFileName;
     private boolean canUsePackage;
     private LocalDateTime estimatedTime;
+    private double timePerPageColor;
+    private double timePerPageBw;
+    private BigDecimal costColor;
+    private BigDecimal costBw;
+    private LocalDateTime availableTill;
+
 
 
     public DocumentUploadResponse(){
@@ -61,5 +67,45 @@ public class DocumentUploadResponse {
 
     public void setEstimatedTime(LocalDateTime estimatedTime) {
         this.estimatedTime = estimatedTime;
+    }
+
+    public double getTimePerPageColor() {
+        return timePerPageColor;
+    }
+
+    public void setTimePerPageColor(double timePerPageColor) {
+        this.timePerPageColor = timePerPageColor;
+    }
+
+    public double getTimePerPageBw() {
+        return timePerPageBw;
+    }
+
+    public void setTimePerPageBw(double timePerPageBw) {
+        this.timePerPageBw = timePerPageBw;
+    }
+
+    public BigDecimal getCostColor() {
+        return costColor;
+    }
+
+    public void setCostColor(BigDecimal costColor) {
+        this.costColor = costColor;
+    }
+
+    public BigDecimal getCostBw() {
+        return costBw;
+    }
+
+    public void setCostBw(BigDecimal costBw) {
+        this.costBw = costBw;
+    }
+
+    public LocalDateTime getAvailableTill() {
+        return availableTill;
+    }
+
+    public void setAvailableTill(LocalDateTime availableTill) {
+        this.availableTill = availableTill;
     }
 }

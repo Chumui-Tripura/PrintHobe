@@ -10,6 +10,7 @@ public class PrinterSummaryDTO {
     private Integer packagePages;
     private boolean available;
     private String operatorPhoneNumber;
+    private String availableTill;
 
     public String getPrinterName() {
         return printerName;
@@ -65,5 +66,13 @@ public class PrinterSummaryDTO {
 
     public void setOperatorPhoneNumber(String operatorPhoneNumber) {
         this.operatorPhoneNumber = operatorPhoneNumber;
+    }
+
+    public String getAvailableTill() {
+        return availableTill;
+    }
+
+    public void setAvailableTill(String availableTill) {
+        this.availableTill = availableTill;
     }
 }

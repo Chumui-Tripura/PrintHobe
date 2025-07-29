@@ -15,6 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 @Service
@@ -32,11 +33,28 @@ public class UserService {
     private OperatorRepository operatorRepository;
 
 
-    public User registerUser(User user){
-        // hashing the pass before saving
+    public Object registerAndFetchDetails(User user) {
+        // Hash the password
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
+        User savedUser = userRepository.save(user);
+
+        // User Related Data
+        Long userId = savedUser.getUserId();
+        String firstName = savedUser.getFirstName();
+        int availablePackagePages = savedUser.getPackagePage(); // Assuming it's 0 by default
+        String role = "USER";
+
+        // Printer data (assuming one printer exists)
+        Printer printer = printerRepository.findById(9L)
+                .orElseThrow(() -> new RuntimeException("Printer not found"));
+
+        boolean printerAvailable = printer.getStatus() == Printer.PrinterStatus.AVAILABLE;
+        BigDecimal costPerPageBW = printer.getCostBw();
+        BigDecimal costPerPageColor = printer.getCostColor();
+
+        return new LoginResponse(userId, role, "Signup Successful", firstName, printerAvailable, availablePackagePages, costPerPageBW, costPerPageColor);
     }
+
 
     public Optional<User> getUserByEmail(String email){
         return userRepository.findByEmail(email);
@@ -65,7 +83,7 @@ public class UserService {
 
             //Printer Documents
             // As we are thinking there is only one printer
-            Optional<Printer> optionalPrinter = printerRepository.findById(1L);
+            Optional<Printer> optionalPrinter = printerRepository.findById(9L);
             Printer printer =optionalPrinter.get();
 
             boolean printerAvailable = printer.getStatus() == Printer.PrinterStatus.AVAILABLE;
@@ -109,6 +127,12 @@ public class UserService {
         boolean isAvailable = printer.getStatus() == Printer.PrinterStatus.AVAILABLE &&
                 (printer.getAvailableTill() == null || printer.getAvailableTill().isAfter(LocalDateTime.now()));
         dto.setAvailable(isAvailable);
+
+        if (printer.getAvailableTill() != null) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("h:mma"); // 6:00PM format
+            String formattedTime = printer.getAvailableTill().format(formatter).toLowerCase(); // make it 6:00pm
+            dto.setAvailableTill(formattedTime);
+        }
 
         // Set operator phone number
         if (printer.getOperator() != null) {

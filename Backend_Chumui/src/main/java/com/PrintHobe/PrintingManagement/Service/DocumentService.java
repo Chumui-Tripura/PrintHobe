@@ -13,7 +13,10 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 @Service
@@ -62,24 +65,19 @@ public class DocumentService {
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime estimatedTime;
 
-        if (printer.getBusyTill() == null || printer.getBusyTill().isBefore(now)) {
-            estimatedTime = now.plusSeconds(totalSeconds + bufferSeconds);
-        } else {
+        if (printer.getBusyTill() != null && printer.getBusyTill().isAfter(now)) {
             estimatedTime = printer.getBusyTill().plusSeconds(totalSeconds + bufferSeconds);
+        } else {
+            estimatedTime = now.plusSeconds(totalSeconds + bufferSeconds);
         }
 
-        // Set new busyTill time
-        printer.setBusyTill(estimatedTime);
-        printerRepository.save(printer);
 
         // Check user's package
         User user = userRepository.findById(request.getUserId())
                 .orElseThrow(() -> new RuntimeException("User Not Found"));
 
         boolean canUsePackage = user.getPackagePage() >= pages * copies;
-
         String originalFileName = file.getOriginalFilename();
-
         return new DocumentUploadResponse(pages, amount, originalFileName, canUsePackage, estimatedTime);
     }
 
@@ -114,6 +112,24 @@ public class DocumentService {
         document.setStartTime(LocalDateTime.now());
         document.setFilePath(filePath);
         document.setOriginalFileName(originalFileName);
+
+        // Calculate and update busyTill
+        boolean isColor = document.getColor() == Document.Color.COLOR;
+        double timePerPage = isColor ? printer.getTimePerPageColor() : printer.getTimePerPageBw();
+        long totalSeconds = (long) (timePerPage * document.getPages() * document.getCopies());
+        long bufferSeconds = 300; // 5 mins
+
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime estimatedEnd;
+
+        if (printer.getBusyTill() != null && printer.getBusyTill().isAfter(now)) {
+            estimatedEnd = printer.getBusyTill().plusSeconds(totalSeconds + bufferSeconds);
+        } else {
+            estimatedEnd = now.plusSeconds(totalSeconds + bufferSeconds);
+        }
+
+        printer.setBusyTill(estimatedEnd);
+        printerRepository.save(printer);
 
         // Save document
         documentRepository.save(document);
@@ -174,6 +190,23 @@ public class DocumentService {
         document.setPayment(payment);
         document.setOriginalFileName(originalFileName);
 
+        // Calculate and update busyTill
+        boolean isColor = document.getColor() == Document.Color.COLOR;
+        double timePerPage = isColor ? printer.getTimePerPageColor() : printer.getTimePerPageBw();
+        long totalSeconds = (long) (timePerPage * document.getPages() * document.getCopies());
+        long bufferSeconds = 300; // 5 mins
+
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime estimatedEnd;
+
+        if (printer.getBusyTill() == null || printer.getBusyTill().isBefore(now)) {
+            estimatedEnd = now.plusSeconds(totalSeconds + bufferSeconds);
+        } else {
+            estimatedEnd = printer.getBusyTill().plusSeconds(totalSeconds + bufferSeconds);
+        }
+
+        printer.setBusyTill(estimatedEnd);
+        printerRepository.save(printer);
         documentRepository.save(document);
     }
 
@@ -182,19 +215,27 @@ public class DocumentService {
 
         List<Document> documents = documentRepository.findByUserUserIdAndStatusNotIn(userId, excludedStatus);
 
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("h:mm a", Locale.ENGLISH);
+
         return documents.stream()
                 .map(doc -> {
                     String documentName = extractFileName(doc.getFilePath());  // e.g., "abc.pdf"
                     String type = doc.getColor().name();  // e.g., BW or COLOR
                     BigDecimal cost = calculateCost(doc); // custom method (optional)
 
+                    LocalDateTime startTime = doc.getStartTime(); // or fallback to now()
+
+                    String formattedDate = startTime != null ? startTime.format(dateFormatter) : "N/A";
+                    String formattedTime = startTime != null ? startTime.format(timeFormatter) : "N/A";
                     return new OngoingDocumentResponse(
                             documentName,
                             doc.getPages(),
                             type,
                             cost,
-                            doc.getStartTime(),  // or doc.getEndTime() if needed
-                            doc.getStatus().name() // Not sure why we are using .name() here
+                            formattedDate,
+                            formattedTime,
+                            doc.getStatus().name()
                     );
                 })
                 .collect(Collectors.toList());
@@ -227,6 +268,81 @@ public class DocumentService {
             printer.setBusyTill(null);
             printerRepository.save(printer);
         }
+    }
+
+    // Approve Document when the document clicks on the Print Button
+    public void approveDocument(Long documentId) {
+        Document document = documentRepository.findById(documentId)
+                .orElseThrow(() -> new RuntimeException("Document not found"));
+
+        document.setStatus(Document.Status.APPROVED);
+        document.setStartTime(LocalDateTime.now());
+        documentRepository.save(document);
+    }
+
+
+    // When the document printing is completed
+    public void completeDocument(Long documentId) {
+        Document document = documentRepository.findById(documentId)
+                .orElseThrow(() -> new RuntimeException("Document not found"));
+
+        document.setStatus(Document.Status.COMPLETED);
+        document.setEndTime(LocalDateTime.now());
+        documentRepository.save(document);
+    }
+
+    // When the document printing is rejected
+    public void rejectDocumentAndPayment(Long documentId) {
+        Document document = documentRepository.findById(documentId)
+                .orElseThrow(() -> new RuntimeException("Document not found"));
+
+        // Set document status to REJECTED
+        document.setStatus(Document.Status.REJECTED);
+        document.setStartTime(null);
+        document.setEndTime(null);
+        documentRepository.save(document);
+
+
+        // If there's an associated payment, reject that too
+        if (document.getPayment() != null) {
+            Payment payment = document.getPayment();
+            payment.setPaymentStatus(Payment.PaymentStatus.REJECTED);
+            paymentRepository.save(payment);
+        }
+    }
+
+    public List<PrintingHistoryOfUser> getPrintingHistoryByUserId(Long userId) {
+        List<Document> documents = documentRepository.findCompletedOrRejectedDocsByUserId(userId);
+        List<PrintingHistoryOfUser> history = new ArrayList<>();
+
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm a", Locale.ENGLISH);
+
+        for (Document doc : documents) {
+            String date = "N/A";
+            String time = "N/A";
+
+            if (doc.getEndTime() != null) {
+                date = doc.getEndTime().format(dateFormatter);
+                time = doc.getEndTime().format(timeFormatter);
+            }
+            String fileName = doc.getOriginalFileName();
+            int pages = doc.getPages();
+
+            String amount;
+            if (doc.getUsedPackage() == Document.UsedPackage.YES){
+                amount = "Package";
+            } else {
+                Payment payment = paymentRepository.findByReferenceId(doc.getPayment().getReferenceId());
+                amount = payment != null ? String.format("%.2f", payment.getAmount()) : "N/A";
+            }
+
+            String status = doc.getStatus().toString(); // Or doc.getStatus().toString()
+            String color = doc.getColor().toString();
+            history.add(new PrintingHistoryOfUser(date, time, fileName, pages, amount, status, color));
+        }
+
+        return history;
     }
 
 }

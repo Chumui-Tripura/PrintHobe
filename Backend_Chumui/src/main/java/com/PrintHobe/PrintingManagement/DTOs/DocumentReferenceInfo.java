@@ -9,15 +9,19 @@ public class DocumentReferenceInfo {
     private String filePath;
     private String originalFileName;
     private int copies;
+    private Document.Status status;
 
 
-    public DocumentReferenceInfo(Long documentId, String referenceId, Document.Color color, String filePath, String originalFileName, int copies) {
+    public DocumentReferenceInfo(Long documentId, String referenceId, Document.Color color,
+                                 String filePath, String originalFileName, int copies,
+                                 Document.Status status) {
         this.documentId = documentId;
         this.referenceId = referenceId;
         this.color = color;
         this.filePath = filePath;
         this.originalFileName = originalFileName;
         this.copies = copies;
+        this.status = status;
     }
 
     public Long getDocumentId() {
@@ -66,5 +70,13 @@ public class DocumentReferenceInfo {
 
     public void setOriginalFileName(String originalFileName) {
         this.originalFileName = originalFileName;
+    }
+
+    public Document.Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Document.Status status) {
+        this.status = status;
     }
 }

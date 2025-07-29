@@ -19,9 +19,15 @@ public class UserController {
 
 
     @PostMapping("/register")
-    public ResponseEntity<User> register(@RequestBody User user){
-        return ResponseEntity.ok(userService.registerUser(user));
+    public ResponseEntity<?> register(@RequestBody User user) {
+        try {
+            Object signupResponse = userService.registerAndFetchDetails(user);
+            return ResponseEntity.ok(signupResponse);
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Signup failed: " + ex.getMessage());
+        }
     }
+
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody User loginRequest){

@@ -1,5 +1,6 @@
 package com.PrintHobe.PrintingManagement.Service;
 
+import com.PrintHobe.PrintingManagement.DTOs.PaymentHistoryOfUser;
 import com.PrintHobe.PrintingManagement.DTOs.PaymentRequest;
 import com.PrintHobe.PrintingManagement.Entity.Operator;
 import com.PrintHobe.PrintingManagement.Entity.Payment;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class PaymentService {
@@ -29,6 +31,11 @@ public class PaymentService {
 
     @Autowired
     private PrinterRepository printerRepository;
+
+    // For front end in the user dashboard
+    public List<PaymentHistoryOfUser> getPaymentHistoryByUserId(Long userId) {
+        return paymentRepository.findPaymentsByUserId(userId);
+    }
 
     public Payment processPayment(PaymentRequest request){
         User user = userRepository.findById(request.getUserId()).orElseThrow(()-> new RuntimeException("User not found!"));
@@ -75,6 +82,4 @@ public class PaymentService {
             userRepository.save(user);
         }
     }
-
-
 }

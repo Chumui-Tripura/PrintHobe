@@ -16,13 +16,19 @@ public interface DocumentRepository extends JpaRepository<Document, Long> {
     long countByPrinter_PrinterIdAndStatus(Long printerId, Document.Status status);
 
     List<Document> findByPrinter_PrinterIdAndStatus(Long printerId, Document.Status status);
-
     @Query("SELECT new com.PrintHobe.PrintingManagement.DTOs.DocumentReferenceInfo(" +
             "d.docId, " +
             "CASE WHEN d.payment IS NULL THEN 'Used Package' ELSE d.payment.referenceId END, " +
-            "d.color, d.filePath, d.originalFileName, d.copies) " +
-            "FROM Document d WHERE d.operator.operatorId = :operatorId")
+            "d.color, d.filePath, d.originalFileName, d.copies, d.status) " +
+            "FROM Document d " +
+            "WHERE d.operator.operatorId = :operatorId " +
+            "AND d.status NOT IN (com.PrintHobe.PrintingManagement.Entity.Document.Status.REJECTED, " +
+            "                     com.PrintHobe.PrintingManagement.Entity.Document.Status.COMPLETED)")
     List<DocumentReferenceInfo> findDocumentReferencesByOperatorId(@Param("operatorId") Long operatorId);
 
     long countByOperator_OperatorIdAndStatus(Long operatorId, Document.Status status);
+
+    @Query("SELECT d FROM Document d WHERE d.user.userId = :userId AND (d.status = 'COMPLETED' OR d.status = 'REJECTED') ORDER BY d.endTime DESC")
+    List<Document> findCompletedOrRejectedDocsByUserId(@Param("userId") Long userId);
+
 }

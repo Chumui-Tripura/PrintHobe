@@ -1,5 +1,6 @@
 package com.PrintHobe.PrintingManagement.Controller;
 
+import com.PrintHobe.PrintingManagement.DTOs.PaymentHistoryOfUser;
 import com.PrintHobe.PrintingManagement.DTOs.PaymentRequest;
 import com.PrintHobe.PrintingManagement.Entity.Payment;
 import com.PrintHobe.PrintingManagement.Service.PaymentService;
@@ -7,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/payments")
@@ -31,5 +34,11 @@ public class PaymentController {
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
+    }
+
+    @GetMapping("/user-payment-history/{userId}")
+    public ResponseEntity<List<PaymentHistoryOfUser>> getPaymentHistory(@PathVariable Long userId) {
+        List<PaymentHistoryOfUser> paymentHistory = paymentService.getPaymentHistoryByUserId(userId);
+        return ResponseEntity.ok(paymentHistory);
     }
 }

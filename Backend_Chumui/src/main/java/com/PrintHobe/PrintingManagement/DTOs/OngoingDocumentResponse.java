@@ -8,17 +8,19 @@ public class OngoingDocumentResponse {
     private int pages;
     private String type;
     private BigDecimal cost;
-    private LocalDateTime dateTime;
+    private String date;
+    private String time;
     private String status;
 
     private OngoingDocumentResponse(){}
 
-    public OngoingDocumentResponse(String documentName, int pages, String type, BigDecimal cost, LocalDateTime dateTime, String status) {
+    public OngoingDocumentResponse(String documentName, int pages, String type, BigDecimal cost, String date, String time, String status) {
         this.documentName = documentName;
         this.pages = pages;
         this.type = type;
         this.cost = cost;
-        this.dateTime = dateTime;
+        this.date = date;
+        this.time = time;
         this.status = status;
     }
 
@@ -54,12 +56,20 @@ public class OngoingDocumentResponse {
         this.cost = cost;
     }
 
-    public LocalDateTime getDateTime() {
-        return dateTime;
+    public String getDate() {
+        return date;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 
     public String getStatus() {

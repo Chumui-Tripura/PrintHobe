@@ -36,8 +36,7 @@ public class FileStorageService {
             Path filePath = uploadPath.resolve(finalFilename);
             file.transferTo(filePath.toFile());
 
-            // Return relative path or absolute path based on your need
-            return filePath.toString();  // Or filePath.toAbsolutePath().toString();
+            return "/files/" + finalFilename;
         } catch (IOException e) {
             throw new RuntimeException("Failed to save file: " + e.getMessage(), e);
         }

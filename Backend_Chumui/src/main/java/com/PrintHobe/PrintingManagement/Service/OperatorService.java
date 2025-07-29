@@ -21,6 +21,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -123,7 +124,11 @@ public class OperatorService {
                 busyTillTime = printer.getBusyTill().format(timeFormatter);
             }
             if (printer.getAvailableTill() != null) {
-                availableTillTime = printer.getAvailableTill().format(timeFormatter);
+                if (printer.getAvailableTill().isBefore(LocalDateTime.now())) {
+                    availableTillTime = "NaN";
+                } else {
+                    availableTillTime = printer.getAvailableTill().format(timeFormatter);
+                }
             }
             printerStatus = printer.getStatus();
         }
@@ -170,13 +175,31 @@ public class OperatorService {
             throw new RuntimeException("Printer not found for operator: " + operatorId);
         }
 
-        // Parse time string (e.g., "14:30")
-        LocalTime time = LocalTime.parse(timeStr); // throws if format invalid
+        // Parse the time string into LocalTime
+        LocalTime time;
+        try {
+            time = LocalTime.parse(timeStr);
+        } catch (DateTimeParseException e) {
+            throw new IllegalArgumentException("Invalid time format. Please use HH:mm.");
+        }
 
-        // Combine with current date
+        // Combine with today's date to get LocalDateTime
         LocalDateTime availableTill = LocalDateTime.of(LocalDate.now(), time);
 
+        // Reject if the selected time is in the past
+        if (availableTill.isBefore(LocalDateTime.now())) {
+            throw new IllegalArgumentException("Selected time has already passed. Please choose a future time.");
+        }
+
+        // Set the available till
         printer.setAvailableTill(availableTill);
+
+        // If the status is NOT_AVAILABLE, set it to AVAILABLE
+        if (printer.getStatus() == Printer.PrinterStatus.NOT_AVAILABLE) {
+            printer.setStatus(Printer.PrinterStatus.AVAILABLE);
+        }
+
         printerRepository.save(printer);
     }
+
 }
